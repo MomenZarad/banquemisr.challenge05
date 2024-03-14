@@ -61,7 +61,9 @@ extension MovieListViewController: UICollectionViewDataSource {
 
 extension MovieListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Navigate to movie details
+        let viewController = MovieDetailsViewController()
+        viewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
