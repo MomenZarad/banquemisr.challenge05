@@ -12,19 +12,24 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMovieTabs()
-        self.tabBar.barTintColor = .green
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     func setupMovieTabs(){
-        let nowPlayingController = setNavigationController(title: "Now Playing", image: UIImage(systemName: "play.tv"), UIViewController())
-        let popularController = setNavigationController(title: "Popular", image: UIImage(systemName: "star"), UIViewController())
-        let upcomingController = setNavigationController(title: "Upcoming", image: UIImage(systemName: "sparkles.tv"), UIViewController())
+        let nowPlayingController = setNavigationController(title: "Now Playing", image: UIImage(systemName: "play.tv"), MovieListViewController(type: .nowPlaying))
+        let popularController = setNavigationController(title: "Popular", image: UIImage(systemName: "star"), MovieListViewController(type: .popular))
+        let upcomingController = setNavigationController(title: "Upcoming", image: UIImage(systemName: "sparkles.tv"), MovieListViewController(type: .upcoming))
         self.setViewControllers([nowPlayingController, popularController, upcomingController], animated: true)
     }
 }
 extension TabBarViewController {
     func setNavigationController(title: String, image: UIImage?, _ viewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController.init(rootViewController: viewController)
+        nav.viewControllers.first?.navigationItem.title = title
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
         return nav

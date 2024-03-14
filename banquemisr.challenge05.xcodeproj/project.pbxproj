@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		F50003DF2BA2770E000AFFA4 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003DE2BA2770E000AFFA4 /* TabbarViewController.swift */; };
+		F50003E32BA29060000AFFA4 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003E12BA29060000AFFA4 /* MovieListViewController.swift */; };
+		F50003E42BA29060000AFFA4 /* MovieListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F50003E22BA29060000AFFA4 /* MovieListViewController.xib */; };
+		F50003E82BA29436000AFFA4 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003E62BA29436000AFFA4 /* MovieCollectionViewCell.swift */; };
+		F50003E92BA29436000AFFA4 /* MovieCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F50003E72BA29436000AFFA4 /* MovieCollectionViewCell.xib */; };
+		F50003EC2BA29791000AFFA4 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003EB2BA29791000AFFA4 /* UICollectionViewExtension.swift */; };
+		F50003EE2BA29A22000AFFA4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003ED2BA29A22000AFFA4 /* UIViewExtension.swift */; };
 		F5427A142BA2644B0083E4DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5427A132BA2644B0083E4DA /* AppDelegate.swift */; };
 		F5427A162BA2644B0083E4DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5427A152BA2644B0083E4DA /* SceneDelegate.swift */; };
 		F5427A1B2BA2644B0083E4DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5427A192BA2644B0083E4DA /* Main.storyboard */; };
@@ -17,6 +23,12 @@
 
 /* Begin PBXFileReference section */
 		F50003DE2BA2770E000AFFA4 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		F50003E12BA29060000AFFA4 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
+		F50003E22BA29060000AFFA4 /* MovieListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListViewController.xib; sourceTree = "<group>"; };
+		F50003E62BA29436000AFFA4 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		F50003E72BA29436000AFFA4 /* MovieCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCollectionViewCell.xib; sourceTree = "<group>"; };
+		F50003EB2BA29791000AFFA4 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
+		F50003ED2BA29A22000AFFA4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F5427A102BA2644B0083E4DA /* banquemisr.challenge05.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = banquemisr.challenge05.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5427A132BA2644B0083E4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5427A152BA2644B0083E4DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +71,7 @@
 		F50003D72BA27645000AFFA4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F50003E02BA29002000AFFA4 /* MovieListScene */,
 				F50003DB2BA276CF000AFFA4 /* TabbarManager */,
 			);
 			path = Scenes;
@@ -70,6 +83,34 @@
 				F50003DE2BA2770E000AFFA4 /* TabbarViewController.swift */,
 			);
 			path = TabbarManager;
+			sourceTree = "<group>";
+		};
+		F50003E02BA29002000AFFA4 /* MovieListScene */ = {
+			isa = PBXGroup;
+			children = (
+				F50003E52BA29407000AFFA4 /* MovieCollectionViewCell */,
+				F50003E12BA29060000AFFA4 /* MovieListViewController.swift */,
+				F50003E22BA29060000AFFA4 /* MovieListViewController.xib */,
+			);
+			path = MovieListScene;
+			sourceTree = "<group>";
+		};
+		F50003E52BA29407000AFFA4 /* MovieCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F50003E62BA29436000AFFA4 /* MovieCollectionViewCell.swift */,
+				F50003E72BA29436000AFFA4 /* MovieCollectionViewCell.xib */,
+			);
+			path = MovieCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		F50003EA2BA29780000AFFA4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F50003EB2BA29791000AFFA4 /* UICollectionViewExtension.swift */,
+				F50003ED2BA29A22000AFFA4 /* UIViewExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F5427A072BA2644B0083E4DA = {
@@ -91,6 +132,7 @@
 		F5427A122BA2644B0083E4DA /* banquemisr.challenge05 */ = {
 			isa = PBXGroup;
 			children = (
+				F50003EA2BA29780000AFFA4 /* Extensions */,
 				F50003D72BA27645000AFFA4 /* Scenes */,
 				F50003D62BA26D89000AFFA4 /* Resources */,
 				F50003D52BA26D7D000AFFA4 /* AppCore */,
@@ -157,9 +199,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F50003E92BA29436000AFFA4 /* MovieCollectionViewCell.xib in Resources */,
 				F5427A202BA2644C0083E4DA /* LaunchScreen.storyboard in Resources */,
 				F5427A1D2BA2644C0083E4DA /* Assets.xcassets in Resources */,
 				F5427A1B2BA2644B0083E4DA /* Main.storyboard in Resources */,
+				F50003E42BA29060000AFFA4 /* MovieListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,7 +216,11 @@
 			files = (
 				F50003DF2BA2770E000AFFA4 /* TabbarViewController.swift in Sources */,
 				F5427A142BA2644B0083E4DA /* AppDelegate.swift in Sources */,
+				F50003E82BA29436000AFFA4 /* MovieCollectionViewCell.swift in Sources */,
 				F5427A162BA2644B0083E4DA /* SceneDelegate.swift in Sources */,
+				F50003EE2BA29A22000AFFA4 /* UIViewExtension.swift in Sources */,
+				F50003EC2BA29791000AFFA4 /* UICollectionViewExtension.swift in Sources */,
+				F50003E32BA29060000AFFA4 /* MovieListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
