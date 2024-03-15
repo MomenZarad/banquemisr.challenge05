@@ -9,6 +9,7 @@ import Foundation
 
 struct Constants {
     static let baseURL = "https://api.themoviedb.org/3/movie/"
+    static let imageBase = "https://image.tmdb.org/t/p/w200"
 }
 
 enum HTTPHeaderField: String {
