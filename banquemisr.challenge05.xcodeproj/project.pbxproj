@@ -16,6 +16,9 @@
 		F50003EE2BA29A22000AFFA4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50003ED2BA29A22000AFFA4 /* UIViewExtension.swift */; };
 		F50940E12BA31064005B6996 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50940DF2BA31064005B6996 /* MovieDetailsViewController.swift */; };
 		F50940E22BA31064005B6996 /* MovieDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F50940E02BA31064005B6996 /* MovieDetailsViewController.xib */; };
+		F50940E52BA43A5F005B6996 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50940E42BA43A5F005B6996 /* NetworkClient.swift */; };
+		F50940E72BA43A67005B6996 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50940E62BA43A67005B6996 /* APIRouter.swift */; };
+		F50940E92BA43A74005B6996 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50940E82BA43A74005B6996 /* Constants.swift */; };
 		F5427A142BA2644B0083E4DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5427A132BA2644B0083E4DA /* AppDelegate.swift */; };
 		F5427A162BA2644B0083E4DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5427A152BA2644B0083E4DA /* SceneDelegate.swift */; };
 		F5427A1B2BA2644B0083E4DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5427A192BA2644B0083E4DA /* Main.storyboard */; };
@@ -33,6 +36,9 @@
 		F50003ED2BA29A22000AFFA4 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		F50940DF2BA31064005B6996 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		F50940E02BA31064005B6996 /* MovieDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailsViewController.xib; sourceTree = "<group>"; };
+		F50940E42BA43A5F005B6996 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		F50940E62BA43A67005B6996 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		F50940E82BA43A74005B6996 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F5427A102BA2644B0083E4DA /* banquemisr.challenge05.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = banquemisr.challenge05.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5427A132BA2644B0083E4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5427A152BA2644B0083E4DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +133,16 @@
 			path = MovieDetailsScene;
 			sourceTree = "<group>";
 		};
+		F50940E32BA43A47005B6996 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				F50940E82BA43A74005B6996 /* Constants.swift */,
+				F50940E62BA43A67005B6996 /* APIRouter.swift */,
+				F50940E42BA43A5F005B6996 /* NetworkClient.swift */,
+			);
+			path = NetworkLayer;
+			sourceTree = "<group>";
+		};
 		F5427A072BA2644B0083E4DA = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +162,7 @@
 		F5427A122BA2644B0083E4DA /* banquemisr.challenge05 */ = {
 			isa = PBXGroup;
 			children = (
+				F50940E32BA43A47005B6996 /* NetworkLayer */,
 				F50003EA2BA29780000AFFA4 /* Extensions */,
 				F50003D72BA27645000AFFA4 /* Scenes */,
 				F50003D62BA26D89000AFFA4 /* Resources */,
@@ -230,10 +247,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F50940E12BA31064005B6996 /* MovieDetailsViewController.swift in Sources */,
+				F50940E92BA43A74005B6996 /* Constants.swift in Sources */,
+				F50940E72BA43A67005B6996 /* APIRouter.swift in Sources */,
 				F50003DF2BA2770E000AFFA4 /* TabbarViewController.swift in Sources */,
 				F5427A142BA2644B0083E4DA /* AppDelegate.swift in Sources */,
 				F50003E82BA29436000AFFA4 /* MovieCollectionViewCell.swift in Sources */,
 				F5427A162BA2644B0083E4DA /* SceneDelegate.swift in Sources */,
+				F50940E52BA43A5F005B6996 /* NetworkClient.swift in Sources */,
 				F50003EE2BA29A22000AFFA4 /* UIViewExtension.swift in Sources */,
 				F50003EC2BA29791000AFFA4 /* UICollectionViewExtension.swift in Sources */,
 				F50003E32BA29060000AFFA4 /* MovieListViewController.swift in Sources */,
