@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum MovieType {
     case nowPlaying
@@ -17,8 +18,11 @@ class MovieListViewController: UIViewController {
 
     @IBOutlet weak var movieCollectionView: UICollectionView!
     
-    var type: MovieType
-    init(type: MovieType) {
+    private var cancellables = Set<AnyCancellable>()
+    private let viewModel: MovieListViewModelType
+    private var type: MovieType
+    init(viewModel: MovieListViewModelType, type: MovieType) {
+        self.viewModel = viewModel
         self.type = type
         super.init(nibName: "MovieListViewController", bundle: nil)
     }
@@ -30,6 +34,8 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupViewModelBinding()
+        viewModel.fetchMovieList(type: type)
     }
 }
 
@@ -47,15 +53,34 @@ private extension MovieListViewController {
     }
 }
 
+// MARK: ViewModel Handler
+private extension MovieListViewController {
+    func setupViewModelBinding() {
+        viewModel.movieListPublisher
+            .receive(on: DispatchQueue.main)
+            .sink{[weak self] error in
+                guard let self else {return}
+                self.movieCollectionView.reloadData()
+            }.store(in: &cancellables)
+    }
+}
+
 // MARK: Collection view handler
 extension MovieListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return viewModel.getMoviesCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let movieCell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+        movieCell.configMovieCell(model: viewModel.getMoviesItem(at: indexPath.row))
         return movieCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.getMoviesCount() - 4 {
+            viewModel.fetchMovieList(type: type)
+        }
     }
 }
 

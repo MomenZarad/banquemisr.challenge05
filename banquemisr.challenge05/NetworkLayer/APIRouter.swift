@@ -9,10 +9,18 @@ import Foundation
 
 enum APIRouter {
     
+    case nowPlaying(params: [String: Any])
+    case popular(params: [String: Any])
+    case upcoming(params: [String: Any])
+    
     var path: String {
         switch self {
-        default:
-            return ""
+        case .nowPlaying(_):
+            return "now_playing"
+        case .popular:
+            return "popular"
+        case .upcoming:
+            return "upcoming"
         }
     }
     
@@ -25,8 +33,12 @@ enum APIRouter {
     
     var params: [String: Any]? {
         switch self {
-        default:
-            return nil
+        case .nowPlaying(let params):
+            return params
+        case .popular(let params):
+            return params
+        case .upcoming(let params):
+            return params
         }
     }
 }
