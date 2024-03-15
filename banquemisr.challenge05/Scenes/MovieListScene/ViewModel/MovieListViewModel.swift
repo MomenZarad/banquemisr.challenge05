@@ -37,7 +37,7 @@ extension MovieListViewModel: MovieListViewModelInput {
     }
     
     func didSelectMovie(at index: Int) {
-        //TODO: Navigate to movie details
+        router?.navigateToMovieDetails(movieID: movies[index].movieID)
     }
 }
 

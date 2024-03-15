@@ -12,6 +12,7 @@ enum APIRouter {
     case nowPlaying(params: [String: Any])
     case popular(params: [String: Any])
     case upcoming(params: [String: Any])
+    case movieDetails(id: Int)
     
     var path: String {
         switch self {
@@ -21,6 +22,8 @@ enum APIRouter {
             return "popular"
         case .upcoming:
             return "upcoming"
+        case .movieDetails(let id):
+            return "\(id)"
         }
     }
     
@@ -39,6 +42,8 @@ enum APIRouter {
             return params
         case .upcoming(let params):
             return params
+        default:
+            return nil
         }
     }
 }
