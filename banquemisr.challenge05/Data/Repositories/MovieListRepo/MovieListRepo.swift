@@ -8,7 +8,7 @@
 import Foundation
 
 final class movieListRepo {
-    func convertToMovieEntity(model: [Result]) -> [MoviesEntity] {
+    func convertToMovieEntity(model: [Movies]) -> [MoviesEntity] {
         return model.map { model in
             MoviesEntity(movieID: model.id ?? 0,
                          movieTitle: model.title ?? "",
