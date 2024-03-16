@@ -32,8 +32,21 @@ struct NetworkClient {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    // Error: request Error
-                    continuation.resume(throwing: error)
+                    // handle Common Network Errors
+                    if let urlError = error as? URLError {
+                        switch urlError.code {
+                        case .notConnectedToInternet, .networkConnectionLost:
+                            continuation.resume(throwing: ApiError.noInternetConnection)
+                        case .timedOut:
+                            continuation.resume(throwing: ApiError.requestTimeout)
+                        default:
+                            continuation.resume(throwing: error)
+                        }
+                    } else {
+                        // Error: request Error
+                        continuation.resume(throwing: error)
+                    }
+                    return
                 }
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                     // Error: invalid HTTP status
@@ -61,7 +74,9 @@ struct NetworkClient {
     }
 }
 
-enum ApiError: Swift.Error {
+enum ApiError: Error {
+    case noInternetConnection
+    case requestTimeout
     case invalidURL
     case invalidHTTPStatus
     case missingData
