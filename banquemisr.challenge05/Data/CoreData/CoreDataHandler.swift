@@ -21,9 +21,9 @@ class CoreDataHandler {
         })
         return container
     }()
-
+    
     lazy var context: NSManagedObjectContext = persistentContainer.viewContext
-
+    
     // MARK: - Core Data Saving support
     private func saveContext() {
         if context.hasChanges {
@@ -36,44 +36,58 @@ class CoreDataHandler {
         }
     }
     
-    public func insert(_ movies: [MovieInfoModel]) {
+    public func insert(_ movies: [MoviesEntity], type: String) {
         for movie in movies {
-            let entity = NSEntityDescription.entity(forEntityName: "Movie", in: context)
-            let newRequest = NSManagedObject(entity: entity!, insertInto: context)
-            newRequest.setValue(movie.id, forKey: "id")
-            newRequest.setValue(movie.index, forKey: "index")
-            newRequest.setValue(movie.title, forKey: "title")
-            newRequest.setValue(movie.posterImage, forKey: "posterImage")
-            newRequest.setValue(movie.releaseDate, forKey: "releaseDate")
-            newRequest.setValue(movie.genre, forKey: "genre")
-            newRequest.setValue(movie.overview, forKey: "overview")
-            newRequest.setValue(movie.runtime, forKey: "runtime")
+            // Check if an object with the same ID already exists
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Movie")
+            fetchRequest.predicate = NSPredicate(format: "id == %d AND type == %@", movie.movieID, type)
+            do {
+                let results = try context.fetch(fetchRequest)
+                if results.first is NSManagedObject {
+                    print("Movie with ID \(movie.movieID) already exists. Skipping insertion.")
+                    continue
+                } else {
+                    let entity = NSEntityDescription.entity(forEntityName: "Movie", in: context)!
+                    let newRequest = NSManagedObject(entity: entity, insertInto: context)
+                    newRequest.setValue(type, forKey: "type")
+                    newRequest.setValue(movie.movieID, forKey: "id")
+                    newRequest.setValue(movie.movieTitle, forKey: "title")
+                    newRequest.setValue(movie.moviePosterImage, forKey: "posterImage")
+                    newRequest.setValue(movie.movieReleaseDate, forKey: "releaseDate")
+                }
+            } catch {
+                print("Error fetching existing movie with ID \(movie.movieID): \(error)")
+            }
         }
         saveContext()
     }
     
-    public func fetchMovieDetails(with index: Int) -> [NSManagedObject] {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let idPredicate = NSPredicate(format: "id == %d", index)
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [idPredicate])
-        request.predicate = predicate
-        request.returnsObjectsAsFaults = false
-
+    public func insertMovieDetails(with id: Int, details: MovieDetailsEntity) {
+        // Check if an object with the specified ID exists
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Movie")
+        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
         do {
-            let result = try context.fetch(request)
-            return result as! [NSManagedObject]
+            let results = try context.fetch(fetchRequest)
+            guard let movie = results.first as? NSManagedObject else {
+                print("No movie found with ID \(id)")
+                return
+            }
+            movie.setValue(details.movieGenres, forKey: "genre")
+            movie.setValue(details.movieOverview, forKey: "overview")
+            movie.setValue(details.movieRunTime, forKey: "runtime")
+            saveContext()
         } catch {
-            return []
+            print("Error updating movie with ID \(id): \(error)")
         }
     }
-
-    public func fetchAllMovies(with index: Int) -> [NSManagedObject] {
+    
+    public func fetchAllMovies(with type: String) -> [NSManagedObject] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let indexPredicate = NSPredicate(format: "index == %d", index)
+        let indexPredicate = NSPredicate(format: "type == %@", type)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [indexPredicate])
         request.predicate = predicate
         request.returnsObjectsAsFaults = false
-
+        
         do {
             let result = try context.fetch(request)
             return result as! [NSManagedObject]
@@ -81,24 +95,29 @@ class CoreDataHandler {
             return []
         }
     }
-
-    public func deleteItem(with index: Int) {
+    
+    public func fetchMovieDetails(with type: String) -> [NSManagedObject] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        request.predicate = NSPredicate(format: "index == %d", index)
+        let idPredicate = NSPredicate(format: "type == %@", type)
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [idPredicate])
+        request.predicate = predicate
+        request.returnsObjectsAsFaults = false
+        
         do {
-            let result = try context.fetch(request) as! [NSManagedObject]
-            result.forEach { context.delete($0) }
-            saveContext()
-        } catch {}
+            let result = try context.fetch(request)
+            return result as! [NSManagedObject]
+        } catch {
+            return []
+        }
     }
-
+    
     public func DeleteAllData() {
         let DelAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Movie"))
         do {
             try context.execute(DelAllReqVar)
         } catch {}
     }
-
+    
     func getMoviesCount() -> Int {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
         do {
