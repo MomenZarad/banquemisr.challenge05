@@ -8,22 +8,15 @@
 import UIKit
 import Combine
 
-enum MovieType {
-    case nowPlaying
-    case popular
-    case upcoming
-}
-
 class MovieListViewController: UIViewController {
 
     @IBOutlet weak var movieCollectionView: UICollectionView!
     
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: MovieListViewModelType
-    private var type: MovieType
-    init(viewModel: MovieListViewModelType, type: MovieType) {
+
+    init(viewModel: MovieListViewModelType) {
         self.viewModel = viewModel
-        self.type = type
         super.init(nibName: "MovieListViewController", bundle: nil)
     }
     
@@ -35,7 +28,7 @@ class MovieListViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupViewModelBinding()
-        viewModel.fetchMovieList(type: type)
+        viewModel.fetchMovieList()
     }
 }
 
@@ -79,7 +72,7 @@ extension MovieListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == viewModel.getMoviesCount() - 4 {
-            viewModel.fetchMovieList(type: type)
+            viewModel.fetchMovieList()
         }
     }
 }

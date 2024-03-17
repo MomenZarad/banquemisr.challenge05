@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 final class MovieDetailsViewModel {
-    private let repo: MovieDetailsRepoType
+    private let usecase: MovieDetailsUsecase
     private var router: MovieDetailsRouterProtocol?
     private var movieID: Int
     private var moviesDetails = PassthroughSubject<MovieDetailsEntity, Never>()
-    init(repo: MovieDetailsRepoType, router: MovieDetailsRouterProtocol, movieID: Int) {
-        self.repo = repo
+    init(usecase: MovieDetailsUsecase, router: MovieDetailsRouterProtocol, movieID: Int) {
+        self.usecase = usecase
         self.router = router
         self.movieID = movieID
     }
@@ -24,7 +24,7 @@ extension MovieDetailsViewModel: MovieDetailsViewModelInput {
     func viewDidLoad() {
         Task {
             do {
-                let movieDetailsResponse = try await repo.getMovieDetails(id: movieID)
+                let movieDetailsResponse = try await usecase.getMovieDetails(id: movieID)
                 moviesDetails.send(movieDetailsResponse)
             } catch let error {
                 print(error)

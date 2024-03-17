@@ -1,12 +1,12 @@
 //
-//  MovieDetailsUsecase.swift
+//  MovieDetailsUsecaseType.swift
 //  banquemisr.challenge05
 //
-//  Created by Momen Zarad on 15/03/2024.
+//  Created by Momen Zarad on 17/03/2024.
 //
 
 import Foundation
 
-protocol MovieDetailsRepoType {
+protocol MovieDetailsUsecaseType {
     func getMovieDetails(id: Int) async throws -> MovieDetailsEntity
 }

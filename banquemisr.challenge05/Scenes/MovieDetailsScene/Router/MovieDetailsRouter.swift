@@ -15,9 +15,9 @@ final class MovieDetailsRouter: MovieDetailsRouterProtocol {
     weak var controller: UIViewController?
 
     static func createMovieDetails(movieID: Int) -> UIViewController {
-        let repo = MovieDetailsRepo()
+        let usecase = MovieDetailsUsecase()
         let router = MovieDetailsRouter()
-        let viewModel = MovieDetailsViewModel(repo: repo, router: router, movieID: movieID)
+        let viewModel = MovieDetailsViewModel(usecase: usecase, router: router, movieID: movieID)
         let viewController = MovieDetailsViewController(viewModel: viewModel)
         router.controller = viewController
         return viewController
