@@ -9,4 +9,5 @@ import Foundation
 
 protocol MovieListUsecaseType {
     func getMovieList(params: [String: Any]) async throws -> (movies: [MoviesEntity], totalPages: Int)
+    func getStoredMovieList() -> [MoviesEntity]
 }

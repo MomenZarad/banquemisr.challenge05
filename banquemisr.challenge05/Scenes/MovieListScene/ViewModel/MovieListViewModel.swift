@@ -31,7 +31,11 @@ extension MovieListViewModel: MovieListViewModelInput {
                     totalPages = movieResponse.totalPages
                 }
             } catch let error {
-                print(error)
+                if case let storedMovies = usecase.getStoredMovieList(), !storedMovies.isEmpty {
+                    movies = storedMovies
+                } else {
+                    print(error)
+                }
             }
         }
     }
