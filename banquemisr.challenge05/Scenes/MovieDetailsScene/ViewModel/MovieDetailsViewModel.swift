@@ -27,7 +27,11 @@ extension MovieDetailsViewModel: MovieDetailsViewModelInput {
                 let movieDetailsResponse = try await usecase.getMovieDetails(id: movieID)
                 moviesDetails.send(movieDetailsResponse)
             } catch let error {
-                print(error)
+                if let storedDetails = usecase.getStoredMovieDetails(id: movieID) {
+                    moviesDetails.send(storedDetails)
+                } else {
+                    print(error)
+                }
             }
         }
     }

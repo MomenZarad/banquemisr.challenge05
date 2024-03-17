@@ -9,4 +9,5 @@ import Foundation
 
 protocol MovieDetailsUsecaseType {
     func getMovieDetails(id: Int) async throws -> MovieDetailsEntity
+    func getStoredMovieDetails(id: Int) -> MovieDetailsEntity?
 }

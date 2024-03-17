@@ -96,9 +96,9 @@ class CoreDataHandler {
         }
     }
     
-    public func fetchMovieDetails(with type: String) -> [NSManagedObject] {
+    public func fetchMovieDetails(with id: Int) -> [NSManagedObject] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let idPredicate = NSPredicate(format: "type == %@", type)
+        let idPredicate = NSPredicate(format: "id == %d", id)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [idPredicate])
         request.predicate = predicate
         request.returnsObjectsAsFaults = false
