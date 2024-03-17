@@ -11,7 +11,7 @@ import Combine
 typealias MovieListViewModelType = MovieListViewModelInput & MovieListViewModelOutput
 
 protocol MovieListViewModelInput {
-    func fetchMovieList(type: MovieType)
+    func fetchMovieList()
     func didSelectMovie(at index: Int)
 }
 

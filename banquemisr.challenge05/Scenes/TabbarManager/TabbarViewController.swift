@@ -21,11 +21,11 @@ class TabBarViewController: UITabBarController {
     
     func setupMovieTabs(){
         let nowPlayingController = setNavigationController(title: "Now Playing", image: UIImage(systemName: "play.tv"),
-                                                           MovieListRouter.createMoviesList(type: .nowPlaying))
+                                                           MovieListRouter.createNowPlayingMoviesList())
         let popularController = setNavigationController(title: "Popular", image: UIImage(systemName: "star"),
-                                                        MovieListRouter.createMoviesList(type: .popular))
+                                                        MovieListRouter.createPopularMoviesList())
         let upcomingController = setNavigationController(title: "Upcoming", image: UIImage(systemName: "sparkles.tv"),
-                                                         MovieListRouter.createMoviesList(type: .upcoming))
+                                                         MovieListRouter.createUpcomingMoviesList())
         self.setViewControllers([nowPlayingController, popularController, upcomingController], animated: true)
     }
 }
