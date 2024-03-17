@@ -9,24 +9,24 @@ import Foundation
 import Combine
 
 final class MovieListViewModel {
-    private let repo: MovieListRepoType
+    private let usecase: MovieListUsecaseType
     private var router: MovieListRouterProtocol?
     @Published private var movies: [MoviesEntity] = []
     private var currentPage = 0
     private var totalPages = 1
-    init(repo: MovieListRepoType, router: MovieListRouterProtocol) {
-        self.repo = repo
+    init(usecase: MovieListUsecaseType, router: MovieListRouterProtocol) {
+        self.usecase = usecase
         self.router = router
     }
 }
 
 extension MovieListViewModel: MovieListViewModelInput {
-    func fetchMovieList(type: MovieType) {
+    func fetchMovieList() {
         Task{
             do {
                 if currentPage < totalPages {
                     currentPage = currentPage + 1
-                    let movieResponse = try await repo.getMovieList(type: type, params: ["page" : currentPage])
+                    let movieResponse = try await usecase.getMovieList(params: ["page" : currentPage])
                     movies.append(contentsOf: movieResponse.movies)
                     totalPages = movieResponse.totalPages
                 }

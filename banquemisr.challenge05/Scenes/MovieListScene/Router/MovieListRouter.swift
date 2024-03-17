@@ -13,12 +13,30 @@ protocol MovieListRouterProtocol {
 
 final class MovieListRouter: MovieListRouterProtocol {
     weak var controller: UIViewController?
-
-    static func createMoviesList(type: MovieType) -> UIViewController {
-        let repo = movieListRepo()
+    
+    static func createNowPlayingMoviesList() -> UIViewController {
+        let usecase = NowPlayingMovieListUsecase()
         let router = MovieListRouter()
-        let viewModel = MovieListViewModel(repo: repo, router: router)
-        let viewController = MovieListViewController(viewModel: viewModel, type: type)
+        let viewModel = MovieListViewModel(usecase: usecase, router: router)
+        let viewController = MovieListViewController(viewModel: viewModel)
+        router.controller = viewController
+        return viewController
+    }
+    
+    static func createPopularMoviesList() -> UIViewController {
+        let usecase = PopularMovieListUsecase()
+        let router = MovieListRouter()
+        let viewModel = MovieListViewModel(usecase: usecase, router: router)
+        let viewController = MovieListViewController(viewModel: viewModel)
+        router.controller = viewController
+        return viewController
+    }
+    
+    static func createUpcomingMoviesList() -> UIViewController {
+        let usecase = UpcomingMovieListUsecase()
+        let router = MovieListRouter()
+        let viewModel = MovieListViewModel(usecase: usecase, router: router)
+        let viewController = MovieListViewController(viewModel: viewModel)
         router.controller = viewController
         return viewController
     }
