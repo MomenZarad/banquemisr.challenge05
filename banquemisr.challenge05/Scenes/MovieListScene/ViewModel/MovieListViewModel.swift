@@ -14,6 +14,7 @@ final class MovieListViewModel {
     @Published private var movies: [MoviesEntity] = []
     private var currentPage = 0
     private var totalPages = 1
+    private let errorMessage = PassthroughSubject<String, Never>()
     init(usecase: MovieListUsecaseType, router: MovieListRouterProtocol) {
         self.usecase = usecase
         self.router = router
@@ -34,7 +35,7 @@ extension MovieListViewModel: MovieListViewModelInput {
                 if case let storedMovies = usecase.getStoredMovieList(), !storedMovies.isEmpty {
                     movies = storedMovies
                 } else {
-                    print(error)
+                    errorMessage.send(error.localizedDescription)
                 }
             }
         }
@@ -48,6 +49,10 @@ extension MovieListViewModel: MovieListViewModelInput {
 extension MovieListViewModel: MovieListViewModelOutput {
     var movieListPublisher: AnyPublisher<[MoviesEntity], Never> {
         $movies.eraseToAnyPublisher()
+    }
+    
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorMessage.eraseToAnyPublisher()
     }
     
     func getMoviesCount() -> Int {
