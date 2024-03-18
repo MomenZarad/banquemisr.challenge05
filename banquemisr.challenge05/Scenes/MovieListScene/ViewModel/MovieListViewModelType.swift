@@ -17,6 +17,7 @@ protocol MovieListViewModelInput {
 
 protocol MovieListViewModelOutput {
     var movieListPublisher: AnyPublisher<[MoviesEntity], Never> { get }
+    var errorPublisher: AnyPublisher<String, Never> { get }
     func getMoviesCount() -> Int
     func getMoviesItem(at index: Int) -> MoviesEntity
 }

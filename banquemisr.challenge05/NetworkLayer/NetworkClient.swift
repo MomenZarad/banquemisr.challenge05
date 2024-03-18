@@ -73,11 +73,3 @@ struct NetworkClient {
         })
     }
 }
-
-enum ApiError: Error {
-    case noInternetConnection
-    case requestTimeout
-    case invalidURL
-    case invalidHTTPStatus
-    case missingData
-}

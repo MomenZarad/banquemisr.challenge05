@@ -51,10 +51,18 @@ private extension MovieListViewController {
     func setupViewModelBinding() {
         viewModel.movieListPublisher
             .receive(on: DispatchQueue.main)
-            .sink{[weak self] error in
+            .sink{[weak self] _ in
                 guard let self else {return}
                 self.movieCollectionView.reloadData()
             }.store(in: &cancellables)
+        
+        viewModel.errorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink{[weak self] error in
+                guard let self else {return}
+                self.showAlert(message: error)
+            }.store(in: &cancellables)
+        
     }
 }
 

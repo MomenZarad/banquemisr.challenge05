@@ -42,6 +42,13 @@ private extension MovieDetailsViewController {
             .sink {[weak self] entity in
                 self?.setupUI(details: entity)
             }.store(in: &cancellables)
+        
+        viewModel.errorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink{[weak self] error in
+                guard let self else {return}
+                self.showAlert(message: error)
+            }.store(in: &cancellables)
     }
     
     func setupUI(details: MovieDetailsEntity) {

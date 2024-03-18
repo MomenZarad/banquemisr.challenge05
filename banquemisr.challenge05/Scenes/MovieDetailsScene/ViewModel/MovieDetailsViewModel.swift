@@ -13,6 +13,7 @@ final class MovieDetailsViewModel {
     private var router: MovieDetailsRouterProtocol?
     private var movieID: Int
     private var moviesDetails = PassthroughSubject<MovieDetailsEntity, Never>()
+    private let errorMessage = PassthroughSubject<String, Never>()
     init(usecase: MovieDetailsUsecase, router: MovieDetailsRouterProtocol, movieID: Int) {
         self.usecase = usecase
         self.router = router
@@ -30,7 +31,7 @@ extension MovieDetailsViewModel: MovieDetailsViewModelInput {
                 if let storedDetails = usecase.getStoredMovieDetails(id: movieID) {
                     moviesDetails.send(storedDetails)
                 } else {
-                    print(error)
+                    errorMessage.send(error.localizedDescription)
                 }
             }
         }
@@ -40,6 +41,10 @@ extension MovieDetailsViewModel: MovieDetailsViewModelInput {
 extension MovieDetailsViewModel: MovieDetailsViewModelOutput {
     var movieDetailsPublisher: AnyPublisher<MovieDetailsEntity, Never> {
         moviesDetails.eraseToAnyPublisher()
+    }
+    
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorMessage.eraseToAnyPublisher()
     }
 }
 
