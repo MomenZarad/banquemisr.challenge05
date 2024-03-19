@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 final class MovieDetailsViewModel {
-    private let usecase: MovieDetailsUsecase
+    private let usecase: MovieDetailsUsecaseType
     private var router: MovieDetailsRouterProtocol?
     private var movieID: Int
     private var moviesDetails = PassthroughSubject<MovieDetailsEntity, Never>()
     private let errorMessage = PassthroughSubject<String, Never>()
-    init(usecase: MovieDetailsUsecase, router: MovieDetailsRouterProtocol, movieID: Int) {
+    init(usecase: MovieDetailsUsecaseType, router: MovieDetailsRouterProtocol, movieID: Int) {
         self.usecase = usecase
         self.router = router
         self.movieID = movieID
