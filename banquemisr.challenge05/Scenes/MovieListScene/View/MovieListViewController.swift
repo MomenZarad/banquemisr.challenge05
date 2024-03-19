@@ -9,12 +9,12 @@ import UIKit
 import Combine
 
 class MovieListViewController: UIViewController {
-
+    
     @IBOutlet weak var movieCollectionView: UICollectionView!
     
     private var cancellables = Set<AnyCancellable>()
     private let viewModel: MovieListViewModelType
-
+    
     init(viewModel: MovieListViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: "MovieListViewController", bundle: nil)
@@ -56,11 +56,16 @@ private extension MovieListViewController {
                 self.movieCollectionView.reloadData()
             }.store(in: &cancellables)
         
+        viewModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { isLoading in
+                isLoading ? Indicator.sharedInstance.showIndicator() : Indicator.sharedInstance.hideIndicator()
+            }.store(in: &cancellables)
+        
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
-            .sink{[weak self] error in
-                guard let self else {return}
-                self.showAlert(message: error)
+            .sink { [weak self] error in
+                self?.showAlert(message: error)
             }.store(in: &cancellables)
         
     }

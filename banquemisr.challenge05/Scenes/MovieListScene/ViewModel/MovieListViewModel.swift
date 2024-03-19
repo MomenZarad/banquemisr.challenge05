@@ -14,7 +14,7 @@ final class MovieListViewModel {
     @Published private var movies: [MoviesEntity] = []
     private var currentPage = 0
     private var totalPages = 1
-    private let errorMessage = PassthroughSubject<String, Never>()
+    private let stateSubject = PassthroughSubject<State, Never>()
     init(usecase: MovieListUsecaseType, router: MovieListRouterProtocol) {
         self.usecase = usecase
         self.router = router
@@ -26,16 +26,18 @@ extension MovieListViewModel: MovieListViewModelInput {
         Task{
             do {
                 if currentPage < totalPages {
+                    stateSubject.send(.loading)
                     currentPage = currentPage + 1
                     let movieResponse = try await usecase.getMovieList(params: ["page" : currentPage])
                     movies.append(contentsOf: movieResponse.movies)
                     totalPages = movieResponse.totalPages
+                    stateSubject.send(.loaded)
                 }
             } catch let error {
                 if case let storedMovies = usecase.getStoredMovieList(), !storedMovies.isEmpty {
                     movies = storedMovies
                 } else {
-                    errorMessage.send(error.localizedDescription)
+                    stateSubject.send(.failure(error.localizedDescription))
                 }
             }
         }
@@ -51,8 +53,14 @@ extension MovieListViewModel: MovieListViewModelOutput {
         $movies.eraseToAnyPublisher()
     }
     
+    var isLoading: AnyPublisher<Bool, Never> {
+        stateSubject.map(\.isLoading)
+            .eraseToAnyPublisher()
+    }
+    
     var errorPublisher: AnyPublisher<String, Never> {
-        errorMessage.eraseToAnyPublisher()
+        stateSubject.compactMap(\.error)
+            .eraseToAnyPublisher()
     }
     
     func getMoviesCount() -> Int {

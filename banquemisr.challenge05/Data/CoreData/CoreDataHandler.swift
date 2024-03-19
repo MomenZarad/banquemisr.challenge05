@@ -44,7 +44,7 @@ class CoreDataHandler {
             do {
                 let results = try context.fetch(fetchRequest)
                 if results.first is NSManagedObject {
-                    print("Movie with ID \(movie.movieID) already exists. Skipping insertion.")
+                    //print("Movie with ID \(movie.movieID) already exists. Skipping insertion.")
                     continue
                 } else {
                     let entity = NSEntityDescription.entity(forEntityName: "Movie", in: context)!
