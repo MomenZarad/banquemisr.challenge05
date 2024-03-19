@@ -16,5 +16,6 @@ protocol MovieDetailsViewModelInput {
 
 protocol MovieDetailsViewModelOutput {
     var movieDetailsPublisher: AnyPublisher<MovieDetailsEntity, Never> { get }
+    var isLoading: AnyPublisher<Bool, Never> { get }
     var errorPublisher: AnyPublisher<String, Never> { get }
 }

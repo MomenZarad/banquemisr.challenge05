@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 class MovieDetailsViewController: UIViewController {
-
+    
     @IBOutlet weak var movieImageView: ImageDownloader!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
@@ -43,11 +43,16 @@ private extension MovieDetailsViewController {
                 self?.setupUI(details: entity)
             }.store(in: &cancellables)
         
+        viewModel.isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { isLoading in
+                isLoading ? Indicator.sharedInstance.showIndicator() : Indicator.sharedInstance.hideIndicator()
+            }.store(in: &cancellables)
+        
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
-            .sink{[weak self] error in
-                guard let self else {return}
-                self.showAlert(message: error)
+            .sink { [weak self] error in
+                self?.showAlert(message: error)
             }.store(in: &cancellables)
     }
     

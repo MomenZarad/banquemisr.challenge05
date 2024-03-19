@@ -13,7 +13,7 @@ final class MovieDetailsViewModel {
     private var router: MovieDetailsRouterProtocol?
     private var movieID: Int
     private var moviesDetails = PassthroughSubject<MovieDetailsEntity, Never>()
-    private let errorMessage = PassthroughSubject<String, Never>()
+    private let stateSubject = PassthroughSubject<State, Never>()
     init(usecase: MovieDetailsUsecaseType, router: MovieDetailsRouterProtocol, movieID: Int) {
         self.usecase = usecase
         self.router = router
@@ -25,13 +25,15 @@ extension MovieDetailsViewModel: MovieDetailsViewModelInput {
     func viewDidLoad() {
         Task {
             do {
+                stateSubject.send(.loading)
                 let movieDetailsResponse = try await usecase.getMovieDetails(id: movieID)
                 moviesDetails.send(movieDetailsResponse)
+                stateSubject.send(.loaded)
             } catch let error {
                 if let storedDetails = usecase.getStoredMovieDetails(id: movieID) {
                     moviesDetails.send(storedDetails)
                 } else {
-                    errorMessage.send(error.localizedDescription)
+                    stateSubject.send(.failure(error.localizedDescription))
                 }
             }
         }
@@ -43,8 +45,14 @@ extension MovieDetailsViewModel: MovieDetailsViewModelOutput {
         moviesDetails.eraseToAnyPublisher()
     }
     
+    var isLoading: AnyPublisher<Bool, Never> {
+        stateSubject.map(\.isLoading)
+            .eraseToAnyPublisher()
+    }
+    
     var errorPublisher: AnyPublisher<String, Never> {
-        errorMessage.eraseToAnyPublisher()
+        stateSubject.compactMap(\.error)
+            .eraseToAnyPublisher()
     }
 }
 
